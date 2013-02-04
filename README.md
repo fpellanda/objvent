@@ -8,56 +8,56 @@ Keep your objectspace synchronized in ruby, rails and javascript with hightspeed
 
 Add this tou your Gemfile:
 
-  gem "objevent"
-  gem "spine-rails"
-  gem "websocket_rails"
+    gem "objevent"
+    gem "spine-rails"
+    gem "websocket_rails"
 
 Then run
 
-  bunle install
-  # create spine application
-  rails g spine:new
-  rails g websocket_rails:install
-  # initialize objvent (replace events.rb with new version)
-  rails generate objvent:init
+    bunle install
+    # create spine application
+    rails g spine:new
+    rails g websocket_rails:install
+    # initialize objvent (replace events.rb with new version)
+    rails generate objvent:init
 
 Add this toTo application.js (before require app)
-  //= require objvent/main
+    //= require objvent/main
 
 ## Usage
 
 ### Ruby
 
-  class User
-    include Objvent::Model 
+    class User
+      include Objvent::Model 
 
-    on :message do |msg|
-      puts "Message received: #{msg}"
+      on :message do |msg|
+        puts "Message received: #{msg}"
+      end
+  
+      def write(message)
+        trigger message
+      end
+  
     end
-
-    def write(message)
-      trigger message
-    end
-
-  end
 
 ### Javascript
 
-  class App.User extends Spine.Model
-    @configure 'User', 'email'
-    @extend Spine.Model.Ajax.Methods
-    @extend Objvent.Model
-    
-    objvents:
-      "on message": "message"
+    class App.User extends Spine.Model
+      @configure 'User', 'email'
+      @extend Spine.Model.Ajax.Methods
+      @extend Objvent.Model
+      
+      objvents:
+        "on message": "message"
+  
+      message: (msg) =>
+        console.log("Message received: #{msg}"
+  
+      writeMessage: (msg) ->
+        @trigger("message", msg)
 
-    message: (msg) =>
-      console.log("Message received: #{msg}"
-
-    writeMessage: (msg) ->
-      @trigger("message", msg)
-
-  end
+    end
 
 
   
