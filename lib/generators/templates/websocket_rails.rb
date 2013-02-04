@@ -33,7 +33,30 @@ class SpineController < WebsocketRails::BaseController
   def attributes
     message["attributes"]
   end
-  
+
+  def live_instance
+    @instances ||= {}
+    @instances[message["class"]] ||= {}
+    if obj = @instances[message["class"]][message["id"]]
+      return obj
+    end
+    @instances[message["class"]][message["id"]] = klass.find(message["id"])
+  end
+
+  def subscribe
+    live_instance.subscribe(message["event"]) do |data|
+      WebsocketRails["spine"].tigger(message["event"])
+    end
+  end
+
+  def unsubscribe
+    live_instance.unsubscribe(message["event"])
+  end
+
+  def trigger
+    klass.find(message["id"]).trigger(message["data"])
+  end
+
   def create
     log "Spine event create #{message["class"].inspect} #{attributes.inspect}"
     klass.create!(attributes)
@@ -48,7 +71,7 @@ class SpineController < WebsocketRails::BaseController
     log "Spine event destroy #{message["class"].inspect}"
     klass.destroy(message["id"])
   end
-  
+
 end
 
 WebsocketRails::EventMap.describe do
@@ -64,12 +87,11 @@ WebsocketRails::EventMap.describe do
   #     subscribe :new, :to => ProductController, :with_method => :new_product
   #   end
   # The above will handle an event triggered on the client like `product.new`.
-  
-  namespace :spine do
-    [:create, :update, :destroy].each {|type|
+
+  namespace :objvent do
+    [:create, :update, :destroy, :trigger, :subscribe, :unsubscribe].each {|type|
       subscribe type, to: SpineController, with_method: type
     }
   end
 
 end
-
