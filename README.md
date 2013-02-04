@@ -32,7 +32,7 @@ Add this toTo application.js (before require app)
       include Objvent::Model 
 
       on :message do |msg|
-        puts "Message received: #{msg}"
+        puts "Message #{msg.inspect} received on User #{self.id}"
       end
   
       def write(message)
@@ -52,7 +52,7 @@ Add this toTo application.js (before require app)
         "on message": "message"
   
       message: (msg) =>
-        console.log("Message received: #{msg}"
+        console.log("Message #{JSON.stringify(msg)} received on User #{@id}")
   
       writeMessage: (msg) ->
         @trigger("message", msg)
