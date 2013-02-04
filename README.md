@@ -9,11 +9,20 @@ Keep your objectspace synchronized in ruby, rails and javascript with hightspeed
 Add this tou your Gemfile:
 
   gem "objevent"
+  gem "spine-rails"
+  gem "websocket_rails"
 
 Then run
 
   bunle install
+  # create spine application
+  rails g spine:new
+  rails g websocket_rails:install
+  # initialize objvent (replace events.rb with new version)
   rails generate objvent:init
+
+Add this toTo application.js (before require app)
+  //= require objvent/main
 
 ## Usage
 

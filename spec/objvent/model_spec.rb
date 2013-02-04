@@ -2,18 +2,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require 'eventmachine'
 require "em-hiredis"
 require 'fiber'
-#class Foo; include Objvent::Model; end
-
 
 require "redis/connection/synchrony"
 require "redis"
 require "redis/connection/ruby"
 
 describe Objvent::Model do
-
-  def pass
-   # f = Fiber.current; EM.next_tick { f.resume }; Fiber.yield
-  end
 
   around(:each) {|example|
     res = nil
@@ -23,11 +17,12 @@ describe Objvent::Model do
     end
     res
   }
+
   before(:each) do Redis::Objects.redis.flushall end
   after(:each) do EM.stop end
   
   let!(:user_class) {
-    # Define a model to test
+    # Define the model to test
     class User
       include Objvent::Model
     end
@@ -47,7 +42,7 @@ describe Objvent::Model do
     its("state.value") { should == "new" }
 
     it "should create a second new user" do
-      # acces subject to create
+      # acces subject to create it
       user_class.find_all.length.should == 0
       subject
       user_class.find_all.length.should == 1

@@ -5,7 +5,7 @@ module Objvent
 
       def copy_initializer
         template "objvent.rb", "config/initializers/objvent.rb"
-        template "websocket_rails.rb", "config/events.rb"
+        template "websocket_rails.rb", "config/initializers/events.rb"
       end
 
       def show_readme
