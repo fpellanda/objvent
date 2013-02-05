@@ -1,6 +1,38 @@
 require 'redis/objects'
 require 'active_support/concern'
 require 'active_support/core_ext/hash'
+#
+# Ruby mixin for tracking object events from servers and clients
+# connected by a redis server
+#
+# Example usage:
+#
+# class User
+#   include Objvent::Model 
+#
+#   on :message do |msg|
+#     puts "Message #{msg.inspect} from User #{self.id}"
+#   end
+#  
+#   def write(message)
+#     trigger message
+#   end
+#
+# end
+#
+# With the above definition you can trigger events on instances of
+# the User class.
+#
+#   user = User.find("anykey")
+#   user.trigger("message", "Some message")
+#
+# Triggers a message on all connected hosts and browsers. This implies
+# calling the "on :message do..." block above.
+#
+# The message on the console would be
+#  'Message "Some message" from User anykey'
+
+
 module Objvent::Model
 
   def self.redis

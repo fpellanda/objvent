@@ -49,7 +49,6 @@ end
 ````coffeescript
 class App.User extends Spine.Model
   @configure 'User', 'email'
-  @extend Spine.Model.Ajax.Methods
   @extend Objvent.Model
       
   objvents:
