@@ -77,7 +77,7 @@ Browser console output:                     | Ruby console output:
  Mesage "Hello JS" from User someuser       |   Message "Hello JS" from User someuser
                                             |
 ############### Trigger a message in RUBY code       ############################
-                                            | > user.trigger("message", "Hello RUBY"
+                                            | > user.trigger("message", "Hello RUBY")
 Browser console output:                     | Ruby console output:
  Mesage "Hello RUBY" from User someuser     |   Message "Hello RUBY" from User someuser
 
