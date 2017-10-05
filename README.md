@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Keep your objectspace synchronized in ruby, rails and javascript with hightspeed. And the best, you can trigger events on objects and listen to them on server and client side!
+Keep your objectspace synchronized in ruby, rails and javascript with highspeed. And the best, you can trigger events on objects and listen to them on server and client side!
 
 ## Rails 3.1 setup
 
